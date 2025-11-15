@@ -32,3 +32,5 @@ class EmbeddingManager:
         embeddings = self.model.encode(text, show_progress_bar=True)
         print(f"Embeddings generated successfully. Shape: {embeddings.shape}")
         return embeddings
+    
+    
