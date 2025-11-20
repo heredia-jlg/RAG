@@ -31,7 +31,7 @@ class VectorStore:
             raise ValueError("Documents and embeddings must have the same length")
         
         ids = []
-        metadata = []
+        metadatas = []
         documents_text = []
         embeddings_list = []
         
@@ -48,17 +48,18 @@ class VectorStore:
             metadata['embedding_size'] = embedding.shape[0]
             metadata['embedding_type'] = 'float32'
             metadata['embedding_format'] = 'numpy'
-            metadata['embedding_shape'] = embedding.shape
             
+            metadatas.append(metadata)
             documents_text.append(doc.page_content)
             embeddings_list.append(embedding.tolist())
+            
         try:
             print(f"Adding {len(documents)} documents to vector store")
             self.collection.add(
                 documents=documents_text,
                 embeddings=embeddings_list,
                 ids=ids,
-                metadata=metadata
+                metadatas=metadatas
             )
             print(f"Added {len(documents)} documents to vector store")
             print(f"Vector store contains {self.collection.count()} documents")
