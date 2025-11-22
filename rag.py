@@ -4,6 +4,7 @@ import os
 from utils import split_documents
 from EmbeddingManager import EmbeddingManager
 from VectorStore import VectorStore
+from RAGRetriever import RAGRetriever
 
 document = Document(page_content="Hello, World!",
                     metadata={"source": "test.txt"})
@@ -26,6 +27,10 @@ text = [chunks.page_content for chunks in chunks]
 embeddings = embedding_manager.generate_embeddings(text)
 
 vector_store.add_documents(chunks, embeddings)
+
+rag_retriever = RAGRetriever(vector_store, embedding_manager)
+
+print(rag_retriever.retrieve("What is attention is all you need?"))
 
 
 #if __name__ == "__main__":
