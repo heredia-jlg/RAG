@@ -30,7 +30,12 @@ vector_store.add_documents(chunks, embeddings)
 
 rag_retriever = RAGRetriever(vector_store, embedding_manager)
 
-print(rag_retriever.retrieve("What is attention is all you need?"))
+print('Visualizing')
+vector_store.visualize()
+print('done')
+
+#print(rag_retriever.retrieve("What is attention is all you need?"))
+
 
 
 #if __name__ == "__main__":

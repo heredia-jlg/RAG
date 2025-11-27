@@ -5,6 +5,8 @@ from langchain_core.documents import Document
 import numpy as np
 import uuid
 from datetime import datetime
+from sklearn.decomposition import PCA
+import plotly.express as px
 
 
 class VectorStore:
@@ -70,3 +72,22 @@ class VectorStore:
     def query(self, query: str):
         return True
         #TODO: Implement query method
+        
+    def visualize(self) -> None:
+        embeddings = self.collection.get(include=['embeddings'])['embeddings']
+        docs = self.collection.get(include=['embeddings'])['ids']
+        
+        pca = PCA(n_components=3)
+        vis_dims = pca.fit_transform(embeddings)
+        fig = px.scatter_3d(
+            x=vis_dims[:, 0],
+            y=vis_dims[:, 1],
+            z=vis_dims[:, 2],
+            text=docs,
+            #labels={'x': 'PCA Component 1', 'y': 'PCA Component 2', 'z': 'PCA Component 3'}, # Name it like you want
+            title='3D Embeddings' # Name it like you want
+        )
+
+        fig.show()
+        
+        
